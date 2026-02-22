@@ -1,5 +1,10 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import "./App.css";
+
+const EMAILJS_SERVICE_ID = "service_e8zr8xa";
+const EMAILJS_TEMPLATE_ID = "template_nsge0hp";
+const EMAILJS_PUBLIC_KEY = "k1lGdOJDBuTioX8_X";
 
 const phrases = [
   "no",
@@ -30,6 +35,22 @@ function App() {
     return phrases[Math.min(noCount, phrases.length - 1)];
   }
 
+  function handleYesClick() {
+    setYesPressed(true);
+
+    emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        message: `She said YES after ${noCount} no's! 🎉`,
+      },
+      EMAILJS_PUBLIC_KEY
+    ).catch((err) => console.error("EmailJS error:", err));
+  }
+
+
+
+
   return (
     <div className="valentine-container">
       {yesPressed ? (
@@ -46,12 +67,12 @@ function App() {
             alt="kittycat2"
             src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHZ4bWh6azMwcHRtdGwycGMyeDB0bGRhdHhscjhoOGl5MW03Z2hxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QAn6JoVuABBEapYyX2/giphy.gif"
           />
-          <div className="question">925 Battery Ave SE Ste 1125 @ 8?</div>
+          <div className="question">will you go on a date with me?</div>
           <div>
             <button
               className="yesButton"
               style={{ fontSize: yesButtonSize }}
-              onClick={() => setYesPressed(true)}
+              onClick={handleYesClick}
             >
               YES
             </button>
