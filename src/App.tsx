@@ -67,7 +67,7 @@ function App() {
             alt="kittycat2"
             src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHZ4bWh6azMwcHRtdGwycGMyeDB0bGRhdHhscjhoOGl5MW03Z2hxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QAn6JoVuABBEapYyX2/giphy.gif"
           />
-          <div className="question">I know this cafe with the best drinks, wanna go grab matcha?</div>
+          <div className="question">I know the best matcha spot, wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"
