@@ -65,7 +65,7 @@ function App() {
         <>
           <img
             alt="kittycat2"
-            src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2kwYjZrMTg4ZDE2bjhjZGpuZ2tjajBmNTB2MjZnM3VkMDQyZXNrciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cS1cdnyIZPZt2I3fr8/giphy.gif"
+            src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTV0cWdoZWE4YmxkaDIzdjM5NXpsd2tvM3BjcWt6N3pqNXR5NXZlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/N71aciDX7O0hiQOZFt/giphy.gif"
           />
           <div className="question">I know the best matcha spot, wanna go grab matcha?</div>
           <div>
