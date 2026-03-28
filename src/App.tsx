@@ -57,7 +57,7 @@ function App() {
         <>
           <img
             alt="kittycat"
-            src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTQyZjN5YzdlMTQ4cnc2dGI2NmNmd3ppemttOWJkZDViejdtejU4ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LsdO5RziEq4Zu5XVVn/giphy.gif"
+            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjd1cWN2MXJnbDlwbjZsdWVzOTN2OWc2Nmh6NHJ5NG5xYzIwbzBubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sNPeJFq6YNEvLZdcqX/giphy.gif"
           />
           <div className="text">YAYYY!</div>
         </>
@@ -65,9 +65,9 @@ function App() {
         <>
           <img
             alt="kittycat2"
-            src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG1seWQ0NThoMGxiY2RnZDcwNHp4ZWR0aWp3dHRseW92MzM5a3FreCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HvuMag5X3bt41jf4xY/giphy.gif"
+            src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTV0cWdoZWE4YmxkaDIzdjM5NXpsd2tvM3BjcWt6N3pqNXR5NXZlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/N71aciDX7O0hiQOZFt/giphy.gif"
           />
-          <div className="question">wanna go to the usa vs portugal game?</div>
+          <div className="question">I know the best matcha spot, wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"

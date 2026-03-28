@@ -1,10 +1,10 @@
-/* Soccer Game App Styles */
+/* Valentine's App Styles */
 
 /* Import a Google Font for better typography */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Set a modern font for the entire app */
 }
 
 .valentine-container {
@@ -13,97 +13,92 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(160deg, #fdf3e7 0%, #f8ede5 50%, #fceee4 100%); /* Warm cream fading to pale peach */
+  background-color: #fbe3e3; /* Softer pink background */
   padding: 20px;
-  border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(200, 150, 120, 0.2);
+  border-radius: 30px; /* Smoother border radius */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for more depth */
   max-width: 90%;
   margin: 0 auto;
   transition: transform 0.3s ease;
 }
 
 .valentine-container:hover {
-  transform: scale(1.02);
+  transform: scale(1.02); /* Subtle scale effect when hovering over the container */
 }
 
 .text {
   font-size: 28px;
-  font-weight: 700;
-  color: #e85d5d; /* Brighter pastel red to match the Portugal jersey */
+  font-weight: 700; /* Bold text for emphasis */
+  color: #ff4d6d; /* Vibrant pink color */
   margin: 20px 0;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 1px; /* Add space between letters for better readability */
 }
 
 .question {
   font-size: 26px;
-  font-weight: 500;
-  color: #5b8fb9; /* Pastel penguin blue */
+  font-weight: 500; /* Medium weight for question text */
+  color: #ff4d6d;
   margin: 20px 0;
   text-align: center;
 }
 
 img {
-  border: 5px solid #f07070; /* Brighter pastel red to match the Portugal jersey */
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(200, 150, 120, 0.25);
+  border: 5px solid #ffb3c6; /* Soft pink border around the image */
+  border-radius: 20px; /* Rounded corners on the image */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
   max-width: 100%;
   transition: transform 0.3s ease;
 }
 
 img:hover {
-  transform: scale(1.05);
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 .yesButton,
 .noButton {
   padding: 12px 24px;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 500; /* Medium weight for buttons */
   margin: 10px;
   cursor: pointer;
   border: none;
-  border-radius: 50px;
+  border-radius: 50px; /* Smoother round buttons */
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(200, 150, 120, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
 }
 
 .yesButton {
-  background-color: #f07070; /* Brighter pastel red to match the Portugal jersey */
+  background-color: #ff4d6d; /* Vibrant pink color */
   color: white;
 }
 
 .noButton {
-  background-color: #89b8d4; /* Pastel penguin blue */
-  color: white;
+  background-color: #f79999; /* Light pink color */
+  color: white; /* Gray color */
 }
 
-.yesButton:hover {
-  background-color: #e05555;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(200, 150, 120, 0.3);
-}
-
+.yesButton:hover,
 .noButton:hover {
-  background-color: #6fa3c2;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(200, 150, 120, 0.3);
+  background-color: #e63758; /* Darker pink on hover */
+  transform: translateY(-2px); /* Slightly lift the button on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
 }
 
 /* Media Query for Mobile Devices */
 @media screen and (max-width: 600px) {
   .text,
   .question {
-    font-size: 18px;
+    font-size: 18px; /* Decrease font size for smaller screens */
   }
 
   .yesButton,
   .noButton {
-    font-size: 16px;
+    font-size: 16px; /* Decrease button font size */
   }
 
   img {
     max-width: 100%;
-    height: auto;
+    height: auto; /* Maintain aspect ratio */
   }
 }
