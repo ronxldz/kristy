@@ -127,7 +127,7 @@ function App() {
               src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTlyajdkNHpyNDNvcjBxYjkweHFuaXdvMTZldzVyMmxyMTIyb3V4aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vaKohy1RFW3zTTXWP2/giphy.gif"
             />
           </div>
-          <div className="question">do youwanna go grab matcha?</div>
+          <div className="question">do you wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"
