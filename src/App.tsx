@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "./App.css";
 
@@ -15,17 +15,56 @@ const phrases = [
   "you're being silly",
   "reconsider?",
   "ugh still no???",
-  "can’t you just say yes already?",
+  "can't you just say yes already?",
   "is that your final answer pookie?",
   "i don't think you're thinking this through...",
   "just think about it for a second longer…",
   "i know you wanna say yes!",
   "last call! final answer?",
 ];
+
+const START_TIME = 12;
+const END_TIME = 33;
+
 function App() {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
+  const playerRef = useRef<any>(null);
+  const intervalRef = useRef<any>(null);
   const yesButtonSize = noCount * 20 + 16;
+
+  useEffect(() => {
+    // Load YouTube IFrame API
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
+    (window as any).onYouTubeIframeAPIReady = () => {
+      playerRef.current = new (window as any).YT.Player("yt-player", {
+        videoId: "sElE_BfQ67s",
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          start: START_TIME,
+          end: END_TIME,
+          mute: 0,
+        },
+        events: {
+          onStateChange: (event: any) => {
+            // When video ends (state = 0), seek back to start and play
+            if (event.data === 0) {
+              playerRef.current.seekTo(START_TIME);
+              playerRef.current.playVideo();
+            }
+          },
+        },
+      });
+    };
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   function handleNoClick() {
     setNoCount(noCount + 1);
@@ -37,7 +76,6 @@ function App() {
 
   function handleYesClick() {
     setYesPressed(true);
-
     emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
@@ -48,26 +86,28 @@ function App() {
     ).catch((err) => console.error("EmailJS error:", err));
   }
 
-
-
-
   return (
     <div className="valentine-container">
+      <div id="yt-player" style={{ display: "none" }} />
       {yesPressed ? (
         <>
-          <img
-            alt="kittycat"
-            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjd1cWN2MXJnbDlwbjZsdWVzOTN2OWc2Nmh6NHJ5NG5xYzIwbzBubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sNPeJFq6YNEvLZdcqX/giphy.gif"
-          />
+          <div className="gif-wrapper">
+            <img
+              alt="kittycat"
+              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm1jMW0zcnpxbHgyZHphZm9ybWF0MGQ1bmg0cHQydHlkNmg1M3dkcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pH6N2NokrrEyiJJSNm/giphy.gif"
+            />
+          </div>
           <div className="text">YAYYY!</div>
         </>
       ) : (
         <>
-          <img
-            alt="kittycat2"
-            src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTV0cWdoZWE4YmxkaDIzdjM5NXpsd2tvM3BjcWt6N3pqNXR5NXZlZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/N71aciDX7O0hiQOZFt/giphy.gif"
-          />
-          <div className="question">I know the best matcha spot, wanna go grab matcha?</div>
+          <div className="gif-wrapper">
+            <img
+              alt="kittycat2"
+              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTlyajdkNHpyNDNvcjBxYjkweHFuaXdvMTZldzVyMmxyMTIyb3V4aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vaKohy1RFW3zTTXWP2/giphy.gif"
+            />
+          </div>
+          <div className="question">do you wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"
@@ -87,4 +127,3 @@ function App() {
 }
 
 export default App;
-

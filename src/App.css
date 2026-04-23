@@ -1,10 +1,12 @@
-/* Valentine's App Styles */
+/* Strawberry Matcha App Styles */
 
-/* Import a Google Font for better typography */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
 body {
-  font-family: 'Poppins', sans-serif; /* Set a modern font for the entire app */
+  font-family: 'Poppins', sans-serif;
+  background-color: #e8f0e4;
+  margin: 0;
+  min-height: 100vh;
 }
 
 .valentine-container {
@@ -12,93 +14,149 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #fbe3e3; /* Softer pink background */
-  padding: 20px;
-  border-radius: 30px; /* Smoother border radius */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for more depth */
-  max-width: 90%;
-  margin: 0 auto;
-  transition: transform 0.3s ease;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #f5e6ea 0%, #c8ddb0 40%, #9fcb8f 100%);
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.valentine-container:hover {
-  transform: scale(1.02); /* Subtle scale effect when hovering over the container */
+/* Strawberry top-left glow, coconut cream center, matcha bottom-right */
+.valentine-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 10%, rgba(229, 100, 120, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 90%, rgba(100, 170, 70, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* GIF wrapper — frames the giphy in the color scheme */
+.gif-wrapper {
+  position: relative;
+  border-radius: 28px;
+  padding: 6px;
+  background: linear-gradient(135deg, #e8637a, #f5a8b4, #fffdf8, #a8d490, #5a9e3a);
+  box-shadow:
+    0 8px 28px rgba(180, 60, 80, 0.15),
+    0 4px 10px rgba(45, 90, 27, 0.12);
+  margin-bottom: 8px;
+}
+
+.gif-wrapper img {
+  display: block;
+  border-radius: 22px;
+  border: none;
+  box-shadow: none;
+  max-width: 420px;
+  width: 100%;
+}
+
+.gif-wrapper img:hover {
+  transform: scale(1.03);
+  box-shadow: none;
+}
+
+/* Override default img styles so only gifs inside wrapper are affected */
+img {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  max-width: 100%;
+  transition: transform 0.35s ease;
 }
 
 .text {
-  font-size: 28px;
-  font-weight: 700; /* Bold text for emphasis */
-  color: #ff4d6d; /* Vibrant pink color */
-  margin: 20px 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2d5a1b;
+  margin: 16px 0;
   text-align: center;
-  letter-spacing: 1px; /* Add space between letters for better readability */
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .question {
-  font-size: 26px;
-  font-weight: 500; /* Medium weight for question text */
-  color: #ff4d6d;
-  margin: 20px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #3a3a3a;
+  margin: 16px 0 20px;
   text-align: center;
-}
-
-img {
-  border: 5px solid #ffb3c6; /* Soft pink border around the image */
-  border-radius: 20px; /* Rounded corners on the image */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  max-width: 100%;
-  transition: transform 0.3s ease;
-}
-
-img:hover {
-  transform: scale(1.05); /* Slight zoom on hover */
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(4px);
+  padding: 10px 24px;
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .yesButton,
 .noButton {
-  padding: 12px 24px;
+  padding: 13px 28px;
   font-size: 20px;
-  font-weight: 500; /* Medium weight for buttons */
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
   margin: 10px;
   cursor: pointer;
   border: none;
-  border-radius: 50px; /* Smoother round buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+  border-radius: 50px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  position: relative;
+  z-index: 1;
 }
 
+/* Matcha green — YES */
 .yesButton {
-  background-color: #ff4d6d; /* Vibrant pink color */
-  color: white;
+  background: linear-gradient(135deg, #5a9e3a 0%, #3d7a22 100%);
+  color: #f8fdf4;
+  box-shadow: 0 4px 14px rgba(45, 90, 27, 0.25);
 }
 
+.yesButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(45, 90, 27, 0.35);
+}
+
+/* Strawberry pink — NO */
 .noButton {
-  background-color: #f79999; /* Light pink color */
-  color: white; /* Gray color */
+  background: linear-gradient(135deg, #e8637a 0%, #c94060 100%);
+  color: #fff5f7;
+  box-shadow: 0 4px 14px rgba(180, 50, 70, 0.22);
 }
 
-.yesButton:hover,
 .noButton:hover {
-  background-color: #e63758; /* Darker pink on hover */
-  transform: translateY(-2px); /* Slightly lift the button on hover */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(180, 50, 70, 0.32);
 }
 
-/* Media Query for Mobile Devices */
+/* Coconut cream bottom decoration */
+.valentine-container::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 253, 248, 0.35) 0%, transparent 70%);
+  border-radius: 50%;
+  bottom: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 @media screen and (max-width: 600px) {
   .text,
   .question {
-    font-size: 18px; /* Decrease font size for smaller screens */
+    font-size: 20px;
   }
 
   .yesButton,
   .noButton {
-    font-size: 16px; /* Decrease button font size */
+    font-size: 16px;
+    padding: 10px 22px;
   }
 
-  img {
-    max-width: 100%;
-    height: auto; /* Maintain aspect ratio */
+  .gif-wrapper img {
+    max-width: 320px;
   }
 }
