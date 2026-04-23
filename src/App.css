@@ -143,6 +143,49 @@ img {
   transform: translateX(-50%);
   pointer-events: none;
 }
+.splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.splash-emoji {
+  font-size: 56px;
+  filter: drop-shadow(0 4px 8px rgba(45, 90, 27, 0.2));
+}
+
+.splash-text {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2d5a1b;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.3px;
+}
+
+.startButton {
+  background: linear-gradient(135deg, #e8637a 0%, #c94060 100%);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 40px;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #fff5f7;
+  cursor: pointer;
+  box-shadow:
+    0 4px 14px rgba(180, 50, 70, 0.25),
+    0 2px 6px rgba(45, 90, 27, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  letter-spacing: 0.3px;
+}
+
+.startButton:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 22px rgba(180, 50, 70, 0.35),
+    0 4px 10px rgba(45, 90, 27, 0.15);
+}
 
 @media screen and (max-width: 600px) {
   .text,

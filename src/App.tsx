@@ -4,7 +4,7 @@ import "./App.css";
 
 const EMAILJS_SERVICE_ID = "service_e8zr8xa";
 const EMAILJS_TEMPLATE_ID = "template_nsge0hp";
-const EMAILJS_PUBLIC_KEY = "k1lGdOJDBuTioX8_X";
+const EMAILJS_PUBLIC_KEY = "k1lGdOJDBuTioX8_V";
 
 const phrases = [
   "no",
@@ -27,14 +27,13 @@ const START_TIME = 12;
 const END_TIME = 33;
 
 function App() {
+  const [started, setStarted] = useState(false);
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
   const playerRef = useRef<any>(null);
-  const intervalRef = useRef<any>(null);
   const yesButtonSize = noCount * 20 + 16;
 
   useEffect(() => {
-    // Load YouTube IFrame API
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(tag);
@@ -43,15 +42,13 @@ function App() {
       playerRef.current = new (window as any).YT.Player("yt-player", {
         videoId: "sElE_BfQ67s",
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           controls: 0,
           start: START_TIME,
           end: END_TIME,
-          mute: 0,
         },
         events: {
           onStateChange: (event: any) => {
-            // When video ends (state = 0), seek back to start and play
             if (event.data === 0) {
               playerRef.current.seekTo(START_TIME);
               playerRef.current.playVideo();
@@ -60,11 +57,12 @@ function App() {
         },
       });
     };
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
   }, []);
+
+  function handleStart() {
+    setStarted(true);
+    playerRef.current?.playVideo();
+  }
 
   function handleNoClick() {
     setNoCount(noCount + 1);
@@ -86,6 +84,21 @@ function App() {
     ).catch((err) => console.error("EmailJS error:", err));
   }
 
+  if (!started) {
+    return (
+      <div className="valentine-container">
+        <div id="yt-player" style={{ display: "none" }} />
+        <div className="splash">
+          <div className="splash-emoji"></div>
+          <div className="splash-text"></div>
+          <button className="startButton" onClick={handleStart}>
+            tap to open
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="valentine-container">
       <div id="yt-player" style={{ display: "none" }} />
@@ -94,7 +107,7 @@ function App() {
           <div className="gif-wrapper">
             <img
               alt="kittycat"
-              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm1jMW0zcnpxbHgyZHphZm9ybWF0MGQ1bmg0cHQydHlkNmg1M3dkcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pH6N2NokrrEyiJJSNm/giphy.gif"
+              src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3ZxbmNpdjVpY3RiYWoxbXAxNDFkaDhrcGJuMjE3dm9qbTZ0NTF2bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5GCBTYTjqzdXhWCeah/giphy.gif"
             />
           </div>
           <div className="text">YAYYY!</div>
@@ -107,7 +120,7 @@ function App() {
               src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTlyajdkNHpyNDNvcjBxYjkweHFuaXdvMTZldzVyMmxyMTIyb3V4aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vaKohy1RFW3zTTXWP2/giphy.gif"
             />
           </div>
-          <div className="question">do you wanna go grab matcha?</div>
+          <div className="question">wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"
