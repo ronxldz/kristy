@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import "./App.css";
 
@@ -23,45 +23,21 @@ const phrases = [
   "last call! final answer?",
 ];
 
-const START_TIME = 12;
-const END_TIME = 33;
-
 function App() {
   const [started, setStarted] = useState(false);
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
-  const playerRef = useRef<any>(null);
+  const audioRef1 = useRef<HTMLAudioElement>(null);
+  const audioRef2 = useRef<HTMLAudioElement>(null);
+  const activeRef = useRef<1 | 2>(1);
   const yesButtonSize = noCount * 20 + 16;
-
-  useEffect(() => {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-
-    (window as any).onYouTubeIframeAPIReady = () => {
-      playerRef.current = new (window as any).YT.Player("yt-player", {
-        videoId: "sElE_BfQ67s",
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          start: START_TIME,
-          end: END_TIME,
-        },
-        events: {
-          onStateChange: (event: any) => {
-            if (event.data === 0) {
-              playerRef.current.seekTo(START_TIME);
-              playerRef.current.playVideo();
-            }
-          },
-        },
-      });
-    };
-  }, []);
 
   function handleStart() {
     setStarted(true);
-    playerRef.current?.playVideo();
+    if (audioRef1.current) {
+      audioRef1.current.currentTime = 0;
+      audioRef1.current.play();
+    }
   }
 
   function handleNoClick() {
@@ -84,15 +60,48 @@ function App() {
     ).catch((err) => console.error("EmailJS error:", err));
   }
 
+  const audioElement = (
+  <>
+    <audio
+      ref={audioRef1}
+      src="/apocalypse.mp3"
+      onTimeUpdate={() => {
+        if (audioRef1.current && audioRef2.current) {
+          const timeLeft = audioRef1.current.duration - audioRef1.current.currentTime;
+          if (timeLeft <= 2 && activeRef.current === 1) {
+            activeRef.current = 2;
+            audioRef2.current.currentTime = 0;
+            audioRef2.current.play();
+          }
+        }
+      }}
+    />
+    <audio
+      ref={audioRef2}
+      src="/apocalypse.mp3"
+      onTimeUpdate={() => {
+        if (audioRef1.current && audioRef2.current) {
+          const timeLeft = audioRef2.current.duration - audioRef2.current.currentTime;
+          if (timeLeft <= 2 && activeRef.current === 2) {
+            activeRef.current = 1;
+            audioRef1.current.currentTime = 0;
+            audioRef1.current.play();
+          }
+        }
+      }}
+    />
+  </>
+);
+
   if (!started) {
     return (
       <div className="valentine-container">
-        <div id="yt-player" style={{ display: "none" }} />
+        {audioElement}
         <div className="splash">
-          <div className="splash-emoji"></div>
-          <div className="splash-text"></div>
+          <div className="splash-emoji">🌿🍓</div>
+          <div className="splash-text">i made you something...</div>
           <button className="startButton" onClick={handleStart}>
-            tap to open
+            tap to open ♡
           </button>
         </div>
       </div>
@@ -101,7 +110,7 @@ function App() {
 
   return (
     <div className="valentine-container">
-      <div id="yt-player" style={{ display: "none" }} />
+      {audioElement}
       {yesPressed ? (
         <>
           <div className="gif-wrapper">
