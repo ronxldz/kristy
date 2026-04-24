@@ -37,6 +37,11 @@ function App() {
     const ctx = new AudioContext();
     audioCtxRef.current = ctx;
 
+    // Force iOS to use media channel instead of ringer
+    const silentAudio = document.createElement("audio");
+    silentAudio.src = "/apocalypse.mp3";
+    silentAudio.play().catch(() => {});
+
     fetch("/apocalypse.mp3")
       .then((res) => res.arrayBuffer())
       .then((arrayBuffer) => ctx.decodeAudioData(arrayBuffer))
