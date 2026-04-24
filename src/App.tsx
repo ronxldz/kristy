@@ -27,33 +27,14 @@ function App() {
   const [started, setStarted] = useState(false);
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const sourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const yesButtonSize = noCount * 20 + 16;
 
   function handleStart() {
     setStarted(true);
-
-    const ctx = new AudioContext();
-    audioCtxRef.current = ctx;
-
-    // Force iOS to use media channel instead of ringer
-    const silentAudio = document.createElement("audio");
-    silentAudio.src = "/apocalypse.mp3";
-    silentAudio.play().catch(() => {});
-
-    fetch("/apocalypse.mp3")
-      .then((res) => res.arrayBuffer())
-      .then((arrayBuffer) => ctx.decodeAudioData(arrayBuffer))
-      .then((decoded) => {
-        const source = ctx.createBufferSource();
-        source.buffer = decoded;
-        source.connect(ctx.destination);
-        source.loop = true;
-        source.start(0);
-        sourceRef.current = source;
-      })
-      .catch((err) => console.error("Audio error:", err));
+    if (audioRef.current) {
+      audioRef.current.play().catch((err) => console.error("Audio error:", err));
+    }
   }
 
   function handleNoClick() {
@@ -81,6 +62,7 @@ function App() {
   if (!started) {
     return (
       <div className="valentine-container">
+        <audio ref={audioRef} src="/apocalypse.mp3" loop />
         <div className="splash">
           <button className="startButton" onClick={handleStart}>
             tap to open
@@ -92,6 +74,7 @@ function App() {
 
   return (
     <div className="valentine-container">
+      <audio ref={audioRef} src="/apocalypse.mp3" loop />
       {yesPressed ? (
         <>
           <div className="gif-wrapper">
