@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import "./App.css";
 
@@ -28,59 +28,28 @@ function App() {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const audioBufferRef = useRef<AudioBuffer | null>(null);
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const yesButtonSize = noCount * 20 + 16;
 
-  // useEffect(() => {
-  //   // Preload the audio buffer
-  //   fetch("/apocalypse.mp3")
-  //     .then((res) => res.arrayBuffer())
-  //     .then((arrayBuffer) => {
-  //       const ctx = new AudioContext();
-  //       audioCtxRef.current = ctx;
-  //       return ctx.decodeAudioData(arrayBuffer);
-  //     })
-  //     .then((decoded) => {
-  //       audioBufferRef.current = decoded;
-  //     })
-  //     .catch((err) => console.error("Audio load error:", err));
-  // }, []);
-
-  // function playLoop() {
-  //   if (!audioCtxRef.current || !audioBufferRef.current) return;
-  //   const ctx = audioCtxRef.current;
-
-  //   // Resume context (needed on mobile after user gesture)
-  //   if (ctx.state === "suspended") ctx.resume();
-
-  //   const source = ctx.createBufferSource();
-  //   source.buffer = audioBufferRef.current;
-  //   source.connect(ctx.destination);
-  //   source.loop = true;
-  //   source.start(0);
-  //   sourceRef.current = source;
-  // }
-
   function handleStart() {
-  setStarted(true);
-  
-  const ctx = new AudioContext();
-  audioCtxRef.current = ctx;
+    setStarted(true);
 
-  fetch("/apocalypse.mp3")
-    .then((res) => res.arrayBuffer())
-    .then((arrayBuffer) => ctx.decodeAudioData(arrayBuffer))
-    .then((decoded) => {
-      const source = ctx.createBufferSource();
-      source.buffer = decoded;
-      source.connect(ctx.destination);
-      source.loop = true;
-      source.start(0);
-      sourceRef.current = source;
-    })
-    .catch((err) => console.error("Audio error:", err));
-}
+    const ctx = new AudioContext();
+    audioCtxRef.current = ctx;
+
+    fetch("/apocalypse.mp3")
+      .then((res) => res.arrayBuffer())
+      .then((arrayBuffer) => ctx.decodeAudioData(arrayBuffer))
+      .then((decoded) => {
+        const source = ctx.createBufferSource();
+        source.buffer = decoded;
+        source.connect(ctx.destination);
+        source.loop = true;
+        source.start(0);
+        sourceRef.current = source;
+      })
+      .catch((err) => console.error("Audio error:", err));
+  }
 
   function handleNoClick() {
     setNoCount(noCount + 1);
@@ -92,22 +61,26 @@ function App() {
 
   function handleYesClick() {
     setYesPressed(true);
-    emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      {
-        message: `She said YES after ${noCount} no's! 🎉`,
-      },
-      EMAILJS_PUBLIC_KEY
-    ).catch((err) => console.error("EmailJS error:", err));
+    emailjs
+      .send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          message: `She said YES after ${noCount} no's! 🎉`,
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+      .catch((err) => console.error("EmailJS error:", err));
   }
 
   if (!started) {
     return (
       <div className="valentine-container">
         <div className="splash">
+          <div className="splash-emoji">🌿🍓</div>
+          <div className="splash-text">i made you something...</div>
           <button className="startButton" onClick={handleStart}>
-            tap to open
+            tap to open ♡
           </button>
         </div>
       </div>
