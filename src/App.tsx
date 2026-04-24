@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "./App.css";
 
@@ -27,17 +27,44 @@ function App() {
   const [started, setStarted] = useState(false);
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
-  const audioRef1 = useRef<HTMLAudioElement>(null);
-  const audioRef2 = useRef<HTMLAudioElement>(null);
-  const activeRef = useRef<1 | 2>(1);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const audioBufferRef = useRef<AudioBuffer | null>(null);
+  const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const yesButtonSize = noCount * 20 + 16;
+
+  useEffect(() => {
+    // Preload the audio buffer
+    fetch("/apocalypse.mp3")
+      .then((res) => res.arrayBuffer())
+      .then((arrayBuffer) => {
+        const ctx = new AudioContext();
+        audioCtxRef.current = ctx;
+        return ctx.decodeAudioData(arrayBuffer);
+      })
+      .then((decoded) => {
+        audioBufferRef.current = decoded;
+      })
+      .catch((err) => console.error("Audio load error:", err));
+  }, []);
+
+  function playLoop() {
+    if (!audioCtxRef.current || !audioBufferRef.current) return;
+    const ctx = audioCtxRef.current;
+
+    // Resume context (needed on mobile after user gesture)
+    if (ctx.state === "suspended") ctx.resume();
+
+    const source = ctx.createBufferSource();
+    source.buffer = audioBufferRef.current;
+    source.connect(ctx.destination);
+    source.loop = true;
+    source.start(0);
+    sourceRef.current = source;
+  }
 
   function handleStart() {
     setStarted(true);
-    if (audioRef1.current) {
-      audioRef1.current.currentTime = 0;
-      audioRef1.current.play();
-    }
+    playLoop();
   }
 
   function handleNoClick() {
@@ -60,43 +87,9 @@ function App() {
     ).catch((err) => console.error("EmailJS error:", err));
   }
 
-  const audioElement = (
-  <>
-    <audio
-      ref={audioRef1}
-      src="/apocalypse.mp3"
-      onTimeUpdate={() => {
-        if (audioRef1.current && audioRef2.current) {
-          const timeLeft = audioRef1.current.duration - audioRef1.current.currentTime;
-          if (timeLeft <= 2 && activeRef.current === 1) {
-            activeRef.current = 2;
-            audioRef2.current.currentTime = 0;
-            audioRef2.current.play();
-          }
-        }
-      }}
-    />
-    <audio
-      ref={audioRef2}
-      src="/apocalypse.mp3"
-      onTimeUpdate={() => {
-        if (audioRef1.current && audioRef2.current) {
-          const timeLeft = audioRef2.current.duration - audioRef2.current.currentTime;
-          if (timeLeft <= 2 && activeRef.current === 2) {
-            activeRef.current = 1;
-            audioRef1.current.currentTime = 0;
-            audioRef1.current.play();
-          }
-        }
-      }}
-    />
-  </>
-);
-
   if (!started) {
     return (
       <div className="valentine-container">
-        {audioElement}
         <div className="splash">
           <button className="startButton" onClick={handleStart}>
             tap to open
@@ -108,7 +101,6 @@ function App() {
 
   return (
     <div className="valentine-container">
-      {audioElement}
       {yesPressed ? (
         <>
           <div className="gif-wrapper">
@@ -127,7 +119,7 @@ function App() {
               src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTlyajdkNHpyNDNvcjBxYjkweHFuaXdvMTZldzVyMmxyMTIyb3V4aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vaKohy1RFW3zTTXWP2/giphy.gif"
             />
           </div>
-          <div className="question">do you wanna go grab matcha?</div>
+          <div className="question">wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"
