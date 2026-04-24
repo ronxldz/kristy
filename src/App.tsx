@@ -77,10 +77,8 @@ function App() {
     return (
       <div className="valentine-container">
         <div className="splash">
-          <div className="splash-emoji">🌿🍓</div>
-          <div className="splash-text">i made you something...</div>
           <button className="startButton" onClick={handleStart}>
-            tap to open ♡
+            tap to open
           </button>
         </div>
       </div>
