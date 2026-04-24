@@ -32,40 +32,55 @@ function App() {
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const yesButtonSize = noCount * 20 + 16;
 
-  useEffect(() => {
-    // Preload the audio buffer
-    fetch("/apocalypse.mp3")
-      .then((res) => res.arrayBuffer())
-      .then((arrayBuffer) => {
-        const ctx = new AudioContext();
-        audioCtxRef.current = ctx;
-        return ctx.decodeAudioData(arrayBuffer);
-      })
-      .then((decoded) => {
-        audioBufferRef.current = decoded;
-      })
-      .catch((err) => console.error("Audio load error:", err));
-  }, []);
+  // useEffect(() => {
+  //   // Preload the audio buffer
+  //   fetch("/apocalypse.mp3")
+  //     .then((res) => res.arrayBuffer())
+  //     .then((arrayBuffer) => {
+  //       const ctx = new AudioContext();
+  //       audioCtxRef.current = ctx;
+  //       return ctx.decodeAudioData(arrayBuffer);
+  //     })
+  //     .then((decoded) => {
+  //       audioBufferRef.current = decoded;
+  //     })
+  //     .catch((err) => console.error("Audio load error:", err));
+  // }, []);
 
-  function playLoop() {
-    if (!audioCtxRef.current || !audioBufferRef.current) return;
-    const ctx = audioCtxRef.current;
+  // function playLoop() {
+  //   if (!audioCtxRef.current || !audioBufferRef.current) return;
+  //   const ctx = audioCtxRef.current;
 
-    // Resume context (needed on mobile after user gesture)
-    if (ctx.state === "suspended") ctx.resume();
+  //   // Resume context (needed on mobile after user gesture)
+  //   if (ctx.state === "suspended") ctx.resume();
 
-    const source = ctx.createBufferSource();
-    source.buffer = audioBufferRef.current;
-    source.connect(ctx.destination);
-    source.loop = true;
-    source.start(0);
-    sourceRef.current = source;
-  }
+  //   const source = ctx.createBufferSource();
+  //   source.buffer = audioBufferRef.current;
+  //   source.connect(ctx.destination);
+  //   source.loop = true;
+  //   source.start(0);
+  //   sourceRef.current = source;
+  // }
 
   function handleStart() {
-    setStarted(true);
-    playLoop();
-  }
+  setStarted(true);
+  
+  const ctx = new AudioContext();
+  audioCtxRef.current = ctx;
+
+  fetch("/apocalypse.mp3")
+    .then((res) => res.arrayBuffer())
+    .then((arrayBuffer) => ctx.decodeAudioData(arrayBuffer))
+    .then((decoded) => {
+      const source = ctx.createBufferSource();
+      source.buffer = decoded;
+      source.connect(ctx.destination);
+      source.loop = true;
+      source.start(0);
+      sourceRef.current = source;
+    })
+    .catch((err) => console.error("Audio error:", err));
+}
 
   function handleNoClick() {
     setNoCount(noCount + 1);
@@ -119,7 +134,7 @@ function App() {
               src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTlyajdkNHpyNDNvcjBxYjkweHFuaXdvMTZldzVyMmxyMTIyb3V4aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vaKohy1RFW3zTTXWP2/giphy.gif"
             />
           </div>
-          <div className="question">wanna go grab matcha?</div>
+          <div className="question">do you wanna go grab matcha?</div>
           <div>
             <button
               className="yesButton"
