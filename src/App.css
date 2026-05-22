@@ -1,10 +1,10 @@
-/* Valentine's App Styles */
-
-/* Import a Google Font for better typography */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;500;700&display=swap');
 
 body {
-  font-family: 'Poppins', sans-serif; /* Set a modern font for the entire app */
+  font-family: 'Poppins', sans-serif;
+  background-color: #006847;
+  margin: 0;
+  min-height: 100vh;
 }
 
 .valentine-container {
@@ -12,93 +12,217 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #fbe3e3; /* Softer pink background */
-  padding: 20px;
-  border-radius: 30px; /* Smoother border radius */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow for more depth */
-  max-width: 90%;
-  margin: 0 auto;
+  min-height: 100vh;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+  background-color: #006847;
+}
+
+.valentine-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='%23006847'/%3E%3Crect x='2' y='2' width='76' height='76' fill='none' stroke='%23004d34' stroke-width='2'/%3E%3Cpolygon points='40,6 74,40 40,74 6,40' fill='none' stroke='%23004d34' stroke-width='2'/%3E%3Crect x='30' y='6' width='20' height='4' fill='%23004d34'/%3E%3Crect x='26' y='10' width='4' height='4' fill='%23004d34'/%3E%3Crect x='50' y='10' width='4' height='4' fill='%23004d34'/%3E%3Crect x='70' y='30' width='4' height='20' fill='%23004d34'/%3E%3Crect x='66' y='26' width='4' height='4' fill='%23004d34'/%3E%3Crect x='66' y='50' width='4' height='4' fill='%23004d34'/%3E%3Crect x='30' y='70' width='20' height='4' fill='%23004d34'/%3E%3Crect x='26' y='66' width='4' height='4' fill='%23004d34'/%3E%3Crect x='50' y='66' width='4' height='4' fill='%23004d34'/%3E%3Crect x='6' y='30' width='4' height='20' fill='%23004d34'/%3E%3Crect x='10' y='26' width='4' height='4' fill='%23004d34'/%3E%3Crect x='10' y='50' width='4' height='4' fill='%23004d34'/%3E%3Crect x='34' y='18' width='12' height='4' fill='%23004d34'/%3E%3Crect x='30' y='22' width='4' height='4' fill='%23004d34'/%3E%3Crect x='46' y='22' width='4' height='4' fill='%23004d34'/%3E%3Crect x='58' y='34' width='4' height='12' fill='%23004d34'/%3E%3Crect x='54' y='30' width='4' height='4' fill='%23004d34'/%3E%3Crect x='54' y='46' width='4' height='4' fill='%23004d34'/%3E%3Crect x='34' y='58' width='12' height='4' fill='%23004d34'/%3E%3Crect x='30' y='54' width='4' height='4' fill='%23004d34'/%3E%3Crect x='46' y='54' width='4' height='4' fill='%23004d34'/%3E%3Crect x='18' y='34' width='4' height='12' fill='%23004d34'/%3E%3Crect x='22' y='30' width='4' height='4' fill='%23004d34'/%3E%3Crect x='22' y='46' width='4' height='4' fill='%23004d34'/%3E%3Crect x='36' y='32' width='8' height='16' fill='%23004d34'/%3E%3Crect x='32' y='36' width='16' height='8' fill='%23004d34'/%3E%3Crect x='38' y='38' width='4' height='4' fill='%23006847'/%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.valentine-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      #CE1126 0px, #CE1126 10px,
+      #ffffff 10px, #ffffff 18px,
+      transparent 18px,
+      transparent calc(100% - 18px),
+      #ffffff calc(100% - 18px), #ffffff calc(100% - 10px),
+      #CE1126 calc(100% - 10px), #CE1126 100%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.valentine-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.gif-wrapper {
+  position: relative;
+  border-radius: 12px;
+  padding: 5px;
+  background: linear-gradient(135deg, #CE1126, #C8A84B, #ffffff, #006847);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(206, 17, 38, 0.3);
+  margin-bottom: 8px;
+}
+
+.gif-wrapper img {
+  display: block;
+  border-radius: 8px;
+  max-width: 380px;
+  width: 100%;
+}
+
+.gif-wrapper img:hover {
+  transform: scale(1.03);
   transition: transform 0.3s ease;
-}
-
-.valentine-container:hover {
-  transform: scale(1.02); /* Subtle scale effect when hovering over the container */
-}
-
-.text {
-  font-size: 28px;
-  font-weight: 700; /* Bold text for emphasis */
-  color: #ff4d6d; /* Vibrant pink color */
-  margin: 20px 0;
-  text-align: center;
-  letter-spacing: 1px; /* Add space between letters for better readability */
-}
-
-.question {
-  font-size: 26px;
-  font-weight: 500; /* Medium weight for question text */
-  color: #ff4d6d;
-  margin: 20px 0;
-  text-align: center;
 }
 
 img {
-  border: 5px solid #ffb3c6; /* Soft pink border around the image */
-  border-radius: 20px; /* Rounded corners on the image */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   max-width: 100%;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
-img:hover {
-  transform: scale(1.05); /* Slight zoom on hover */
+.question {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 16px 0 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.65);
+  border: 2px solid #C8A84B;
+  padding: 12px 28px;
+  border-radius: 50px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.3px;
+}
+
+.text {
+  font-family: 'Bebas Neue', 'Poppins', sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  color: #C8A84B;
+  margin: 16px 0;
+  text-align: center;
+  letter-spacing: 4px;
+  text-shadow:
+    0 0 20px rgba(200, 168, 75, 0.6),
+    0 2px 0 rgba(0, 0, 0, 0.5);
 }
 
 .yesButton,
 .noButton {
-  padding: 12px 24px;
-  font-size: 20px;
-  font-weight: 500; /* Medium weight for buttons */
+  padding: 13px 32px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
   margin: 10px;
   cursor: pointer;
   border: none;
-  border-radius: 50px; /* Smoother round buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+  border-radius: 50px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .yesButton {
-  background-color: #ff4d6d; /* Vibrant pink color */
-  color: white;
+  background: linear-gradient(135deg, #006847 0%, #004d34 100%);
+  color: #C8A84B;
+  border: 2px solid #C8A84B;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.yesButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(200, 168, 75, 0.4);
 }
 
 .noButton {
-  background-color: #f79999; /* Light pink color */
-  color: white; /* Gray color */
+  background: linear-gradient(135deg, #CE1126 0%, #a50d1e 100%);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(206, 17, 38, 0.35);
 }
 
-.yesButton:hover,
 .noButton:hover {
-  background-color: #e63758; /* Darker pink on hover */
-  transform: translateY(-2px); /* Slightly lift the button on hover */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(206, 17, 38, 0.5);
 }
 
-/* Media Query for Mobile Devices */
+.splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.startButton {
+  background: linear-gradient(135deg, #CE1126 0%, #a50d1e 100%);
+  border: 2px solid rgba(200, 168, 75, 0.6);
+  border-radius: 50px;
+  padding: 14px 44px;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow:
+    0 4px 20px rgba(206, 17, 38, 0.4),
+    0 0 0 1px rgba(200, 168, 75, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.startButton:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 28px rgba(206, 17, 38, 0.5),
+    0 0 0 1px rgba(200, 168, 75, 0.5);
+}
+
+.gifs-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 @media screen and (max-width: 600px) {
-  .text,
   .question {
-    font-size: 18px; /* Decrease font size for smaller screens */
+    font-size: 18px;
+    padding: 8px 18px;
   }
 
   .yesButton,
   .noButton {
-    font-size: 16px; /* Decrease button font size */
+    font-size: 15px;
+    padding: 10px 22px;
   }
 
-  img {
-    max-width: 100%;
-    height: auto; /* Maintain aspect ratio */
+  .gif-wrapper img {
+    max-width: 300px;
   }
+
+  .text {
+    font-size: 38px;
+  }
+
+  .gifs-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.visualizer {
+  width: 100%;
+  max-width: 500px;
+  height: 80px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.5);
 }
