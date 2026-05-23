@@ -30,6 +30,7 @@ function App() {
   const [started, setStarted] = useState(false);
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const sourceARef = useRef<AudioBufferSourceNode | null>(null);
@@ -69,14 +70,12 @@ function App() {
       const inGain = isA ? gainBRef.current! : gainARef.current!;
       const oldSrc = isA ? sourceARef.current : sourceBRef.current;
 
-      // Ramp out old source and hard stop it after fade
       outGain.gain.setValueAtTime(1, ctx.currentTime);
       outGain.gain.linearRampToValueAtTime(0, ctx.currentTime + FADE_DURATION);
       if (oldSrc) {
         try { oldSrc.stop(ctx.currentTime + FADE_DURATION + 0.05); } catch {}
       }
 
-      // Start new source and ramp in
       const newSrc = createSource(ctx, buffer, inGain);
       inGain.gain.setValueAtTime(0, ctx.currentTime);
       inGain.gain.linearRampToValueAtTime(1, ctx.currentTime + FADE_DURATION);
@@ -123,6 +122,18 @@ function App() {
 
     scheduleNext(ctx, buffer);
     drawVisualizer();
+  }
+
+  function togglePlayPause() {
+    const ctx = audioCtxRef.current;
+    if (!ctx) return;
+    if (isPlaying) {
+      ctx.suspend();
+      setIsPlaying(false);
+    } else {
+      ctx.resume();
+      setIsPlaying(true);
+    }
   }
 
   function drawVisualizer() {
@@ -215,7 +226,22 @@ function App() {
 
   return (
     <div className="valentine-container">
-      <canvas ref={canvasRef} className="visualizer" width={600} height={80} />
+      <div className="visualizer-row">
+        <canvas ref={canvasRef} className="visualizer" width={600} height={80} />
+        <button className="pauseButton" onClick={togglePlayPause}>
+          {isPlaying ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="5" y="3" width="4" height="18" rx="1" />
+              <rect x="15" y="3" width="4" height="18" rx="1" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 3l14 9-14 9V3z" />
+            </svg>
+          )}
+        </button>
+      </div>
+
       {yesPressed ? (
         <>
           <div className="gif-wrapper">
@@ -229,9 +255,16 @@ function App() {
       ) : (
         <>
           <div className="gifs-row">
-            <div className="gif-wrapper">
-              <img alt="match details" src="/match-details.jpeg" />
-            </div>
+            
+              <a href="https://www.cosm.com/atlanta/events/wc-mexico-south-africa-atl-2026-06-11-1500"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gif-link"
+            >
+              <div className="gif-wrapper">
+                <img alt="match details" src="/match-details.jpeg" />
+              </div>
+            </a>
             <div className="gif-wrapper">
               <img
                 alt="mexico gif"
