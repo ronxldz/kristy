@@ -219,12 +219,12 @@ img {
 }
 
 .visualizer {
-  width: 100%;
-  max-width: 500px;
+  flex: 1;
+  min-width: 0;        /* prevents flex overflow */
   height: 80px;
-  margin-bottom: 16px;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.5);
+  /* remove max-width and margin-bottom — the row handles those now */
 }
 
 .visualizer-row {
