@@ -95,6 +95,12 @@ function App() {
     const ctx = new AudioContext();
     audioCtxRef.current = ctx;
 
+    const silentBuffer = ctx.createBuffer(1, 1, 22050);
+    const silentSrc = ctx.createBufferSource();
+    silentSrc.buffer = silentBuffer;
+    silentSrc.connect(ctx.destination);
+    silentSrc.start(0);
+
     const analyser = ctx.createAnalyser();
     analyser.fftSize = 128;
     analyser.connect(ctx.destination);
