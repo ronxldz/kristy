@@ -143,10 +143,11 @@ function App() {
 
     const ctx = canvas.getContext("2d")!;
     const data = new Uint8Array(analyser.frequencyBinCount);
+    const localAnalyser = analyser;
 
     function draw() {
       animFrameRef.current = requestAnimationFrame(draw);
-      analyser.getByteFrequencyData(data);
+      localAnalyser.getByteFrequencyData(data);
 
       const W = canvas!.width;
       const H = canvas!.height;
